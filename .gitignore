@@ -1,0 +1,164 @@
+# ==============================
+# UN-Robotics - C/C++ gitignore
+# ==============================
+
+# Build dependency files
+*.d
+
+# Object and intermediate binaries
+*.o
+*.ko
+*.obj
+*.elf
+
+# Additional compiled objects
+*.slo
+
+# Linker outputs
+*.ilk
+*.map
+*.exp
+
+# Precompiled headers
+*.gch
+*.pch
+
+# Fortran modules (in case of mixed toolchains)
+*.mod
+*.smod
+
+# Static library artifacts
+*.lai
+
+# Library binaries
+*.lib
+*.a
+*.la
+*.lo
+
+# Shared library binaries
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executable binaries and firmware-like outputs
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# Debug symbol and debug output files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Kernel module compile results (harmless if unused)
+*.mod*
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf
+
+# CMake generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+install_manifest.txt
+CTestTestfile.cmake
+Testing/
+
+# Autotools and libtool generated files
+autom4te.cache/
+aclocal.m4
+compile
+config.guess
+config.log
+config.status
+config.sub
+configure
+depcomp
+install-sh
+libtool
+ltmain.sh
+missing
+m4/
+
+# Generic build output directories
+build/
+build-*/
+cmake-build-*/
+out/
+dist/
+lib64/
+
+# Coverage and profiling artifacts
+*.gcda
+*.gcno
+*.gcov
+*.profraw
+*.profdata
+
+# Generic logs and temporary files
+*.log
+*.tmp
+*.bak
+
+# OS-generated junk files
+.DS_Store
+.DS_Store?
+.AppleDouble
+.LSOverride
+.Spotlight-V100/
+.Trashes/
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+*~
+
+# IDE and editor local configuration
+.vscode/
+.idea/
+*.iml
+*.ipr
+*.iws
+*.suo
+*.user
+*.userossc
+*.sln.docstates
+*.opendb
+*.VC.db
+*.VC.opendb
+
+# Tooling metadata and local caches
+compile_commands.json
+.cache/
+.clangd/
+
+# Ninja build files
+.ninja_deps
+.ninja_log
+
+# C/C++ package manager artifacts
+.conan/
+conan.lock
+conanbuildinfo.*
+conaninfo.txt
+vcpkg_installed/
+
+# Arduino and PlatformIO artifacts
+.pio/
+.piolibdeps/
+.arduinoIDE/
+*.eep
+*.lss
+*.lst
+*.sym
