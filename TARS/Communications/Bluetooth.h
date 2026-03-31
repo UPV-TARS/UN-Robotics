@@ -126,7 +126,15 @@ class TARS_Bluetooth {
                 return false;
             }
 
-            const float y = std::strtof(comma + 1, nullptr);
+            char* endY = nullptr;
+            const float y = std::strtof(comma + 1, &endY);
+            if (endY == comma + 1 || *endY != '\0') {
+                return false;
+            }
+
+            if (std::isnan(y) || std::isinf(y)) {
+                return false;
+            }
             joystickToPWM(x, y);
             return true;
         }
