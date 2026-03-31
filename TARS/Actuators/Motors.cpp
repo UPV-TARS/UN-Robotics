@@ -34,9 +34,9 @@ void TARS_Motors::set(int16_t pwmLeft, int16_t pwmRight) {
 }
 
 void TARS_Motors::_setMotor(uint8_t in1Pin, uint8_t in2Pin, uint8_t enPin, int16_t pwm) {
-    // Saturar a [-255, 255] y obtener valor absoluto.
+    // Ajusta direccion y limita el duty PWM al rango valido [0, 255].
     uint8_t duty = 0;
-    
+
     if (pwm > 0) {
         // Adelante: IN1 alto, IN2 bajo.
         digitalWrite(in1Pin, HIGH);
@@ -53,6 +53,6 @@ void TARS_Motors::_setMotor(uint8_t in1Pin, uint8_t in2Pin, uint8_t enPin, int16
         digitalWrite(in2Pin, LOW);
         duty = 0;
     }
-    
+
     ledcWrite(enPin, duty);
 }

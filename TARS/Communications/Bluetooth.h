@@ -3,13 +3,10 @@
 #include <Arduino.h>
 #include <BluetoothSerial.h>
 
-/** @brief Tamaño máximo del buffer interno (optimizado para "x,y" con rango [-100,100]). */
-#define TARS_BT_BUFFER_SIZE 32
-
 /**
  * @brief Canal Bluetooth para control remoto de TARS.
  *
- * Recibe tramas del mando (formato Vx,yF), convierte joystick a PWM
+ * Recibe tramas del mando con formato Vx,yF, convierte joystick a PWM
  * diferencial y expone el resultado en pwm1/pwm2.
  */
 class TARS_Bluetooth {
@@ -52,8 +49,10 @@ class TARS_Bluetooth {
         void joystickToPWM(float x, float y, int16_t minPWM = -1);
 
     private:
+        static constexpr uint8_t kBufferSize = 32;
+
         BluetoothSerial _bt;
-        char _buffer[TARS_BT_BUFFER_SIZE];
+        char _buffer[kBufferSize];
         uint8_t _bufferIndex = 0;
         bool _receiving = false;
         uint8_t _minPWM = 80;

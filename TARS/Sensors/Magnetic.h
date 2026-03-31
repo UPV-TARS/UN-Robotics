@@ -3,7 +3,7 @@
 #include <Arduino.h>
 
 /**
- * @brief Sensor magnetico digital para deteccion de campo magnetico.
+ * @brief Sensor magnetico digital para deteccion de campo.
  *
  * La lectura es booleana y depende del nivel logico entregado por el modulo.
  */

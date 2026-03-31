@@ -1,5 +1,6 @@
 #pragma once
 
-#include "Ultrasonic.h"
-#include "Magnetic.h"
+// Sensores disponibles en TARS.
 #include "Infrared.h"
+#include "Magnetic.h"
+#include "Ultrasonic.h"

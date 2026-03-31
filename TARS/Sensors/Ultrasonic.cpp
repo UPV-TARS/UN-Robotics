@@ -1,5 +1,3 @@
-#include <Arduino.h>
-
 #include "Ultrasonic.h"
 
 /**
@@ -24,17 +22,17 @@ void TARS_Ultrasonic::begin() {
  * de recorrido ida y vuelta en aire.
  */
 float TARS_Ultrasonic::readDistanceCM() {
-    // Enviar pulso de trigger
+     // Envia pulso de trigger.
     digitalWrite(_triggerPin, LOW);
     delayMicroseconds(2);
     digitalWrite(_triggerPin, HIGH);
     delayMicroseconds(10);
     digitalWrite(_triggerPin, LOW);
 
-    // Medir duración del pulso de echo
-    const unsigned long duration = pulseIn(_echoPin, HIGH, 30000); // Timeout de 30ms
+     // Mide duracion del pulso de echo.
+     const unsigned long duration = pulseIn(_echoPin, HIGH, 30000);  // Timeout de 30 ms.
 
-    // Convertir duración a distancia (velocidad del sonido ~343 m/s)
+     // Convierte duracion a distancia (velocidad del sonido ~343 m/s).
     const float distanceCM = (duration / 2.0f) * 0.0343f;
 
     return distanceCM;

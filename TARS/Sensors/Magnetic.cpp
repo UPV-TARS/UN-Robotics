@@ -11,5 +11,5 @@ void TARS_Magnetic::begin() {
 
 /** @copydoc TARS_Magnetic::isMagnetDetected */
 bool TARS_Magnetic::isMagnetDetected() const {
-    return digitalRead(_pin) == HIGH; // Asumiendo que el sensor se activa con HIGH
+    return digitalRead(_pin) == HIGH;  // Asume sensor activo en HIGH.
 }
