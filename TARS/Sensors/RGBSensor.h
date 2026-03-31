@@ -10,8 +10,8 @@
 class TARS_RGBSensor {
   public:
     explicit TARS_RGBSensor(
-        tcs34725IntegrationTime integrationTime = TCS34725_INTEGRATIONTIME_614MS,
-        tcs34725Gain gain = TCS34725_GAIN_1X)
+                uint8_t integrationTime = TCS34725_INTEGRATIONTIME_614MS,
+                tcs34725Gain_t gain = TCS34725_GAIN_1X)
         : _tcs(integrationTime, gain), _hue(0.0f) {}
 
     bool begin() {
