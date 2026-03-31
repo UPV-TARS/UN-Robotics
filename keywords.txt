@@ -1,0 +1,29 @@
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+TARS_Motors	KEYWORD1
+TARS_Servo	KEYWORD1
+TARS_Bluetooth	KEYWORD1
+TARS_Infrared	KEYWORD1
+TARS_Magnetic	KEYWORD1
+TARS_RGBSensor	KEYWORD1
+TARS_Ultrasonic	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+begin	KEYWORD2
+set	KEYWORD2
+moveAngle	KEYWORD2
+getAngle	KEYWORD2
+update	KEYWORD2
+isConnected	KEYWORD2
+joystickToPWM	KEYWORD2
+readLeft	KEYWORD2
+readRight	KEYWORD2
+isMagnetDetected	KEYWORD2
+readRaw	KEYWORD2
+readHue	KEYWORD2
+getHue	KEYWORD2
+readColorName	KEYWORD2
+readDistanceCM	KEYWORD2
