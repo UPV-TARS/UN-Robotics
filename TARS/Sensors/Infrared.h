@@ -12,10 +12,10 @@ class TARS_Infrared {
     public:
         /**
          * @brief Crea una instancia de sensores infrarrojos.
-         * @param Leftpin Pin digital conectado al sensor izquierdo.
-         * @param Rightpin Pin digital conectado al sensor derecho.
+         * @param leftPin Pin digital conectado al sensor izquierdo.
+         * @param rightPin Pin digital conectado al sensor derecho.
          */
-        TARS_Infrared(uint8_t Leftpin, uint8_t Rightpin);
+        TARS_Infrared(uint8_t leftPin, uint8_t rightPin);
 
         /**
          * @brief Inicializa los pines de los sensores como entrada.
@@ -36,8 +36,8 @@ class TARS_Infrared {
 
     private:
         /// @brief Pin digital del sensor infrarrojo izquierdo.
-        uint8_t _Leftpin;
+        uint8_t _leftPin;
 
         /// @brief Pin digital del sensor infrarrojo derecho.
-        uint8_t _Rightpin;
+        uint8_t _rightPin;
 };
