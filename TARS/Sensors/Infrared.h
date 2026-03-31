@@ -26,13 +26,13 @@ class TARS_Infrared {
          * @brief Lee el estado del sensor infrarrojo izquierdo.
          * @return `true` si la lectura digital del pin es `HIGH`; en caso contrario, `false`.
          */
-        bool readLeft();
+        bool readLeft() const;
 
         /**
          * @brief Lee el estado del sensor infrarrojo derecho.
          * @return `true` si la lectura digital del pin es `HIGH`; en caso contrario, `false`.
          */
-        bool readRight();
+        bool readRight() const;
 
     private:
         /// @brief Pin digital del sensor infrarrojo izquierdo.
