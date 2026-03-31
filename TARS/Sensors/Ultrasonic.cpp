@@ -32,7 +32,7 @@ float TARS_Ultrasonic::readDistanceCM() {
     digitalWrite(_triggerPin, LOW);
 
     // Medir duración del pulso de echo
-    const long duration = pulseIn(_echoPin, HIGH, 30000); // Timeout de 30ms
+    const unsigned long duration = pulseIn(_echoPin, HIGH, 30000); // Timeout de 30ms
 
     // Convertir duración a distancia (velocidad del sonido ~343 m/s)
     const float distanceCM = (duration / 2.0f) * 0.0343f;
