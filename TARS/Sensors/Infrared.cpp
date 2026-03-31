@@ -13,7 +13,7 @@ void TARS_Infrared::begin() {
 }
 
 /** @copydoc TARS_Infrared::readLeft */
-bool TARS_Infrared::readLeft() {
+bool TARS_Infrared::readLeft() const {
     return digitalRead(_Leftpin) == HIGH;
 }
 
