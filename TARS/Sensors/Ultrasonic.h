@@ -43,7 +43,7 @@ class TARS_Ultrasonic {
             digitalWrite(_triggerPin, LOW);
 
             // Mide duracion del pulso de echo.
-            const unsigned long duration = pulseIn(_echoPin, HIGH, 30000);
+            const unsigned long duration = pulseIn(_echoPin, HIGH, 5800);
 
             // Convierte duracion a distancia (velocidad del sonido ~343 m/s).
             return (duration / 2.0f) * 0.0343f;
