@@ -56,4 +56,3 @@ void TARS_Motors::_setMotor(uint8_t in1Pin, uint8_t in2Pin, uint8_t enPin, int16
     
     ledcWrite(enPin, duty);
 }
-}
