@@ -18,6 +18,6 @@ bool TARS_Infrared::readLeft() const {
 }
 
 /** @copydoc TARS_Infrared::readRight */
-bool TARS_Infrared::readRight() {
+bool TARS_Infrared::readRight() const {
     return digitalRead(_Rightpin) == HIGH;
 }
