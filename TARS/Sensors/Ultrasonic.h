@@ -15,20 +15,39 @@ class TARS_Ultrasonic {
          * @param triggerPin Pin digital conectado a TRIG.
          * @param echoPin Pin digital conectado a ECHO.
          */
-        TARS_Ultrasonic(uint8_t triggerPin, uint8_t echoPin);
+                TARS_Ultrasonic(uint8_t triggerPin, uint8_t echoPin)
+                        : _triggerPin(triggerPin),
+                            _echoPin(echoPin) {}
 
         /**
          * @brief Inicializa los pines del sensor.
          *
          * Configura TRIG como salida y ECHO como entrada.
          */
-        void begin();
+        void begin() {
+            pinMode(_triggerPin, OUTPUT);
+            pinMode(_echoPin, INPUT);
+            digitalWrite(_triggerPin, LOW);
+        }
 
         /**
          * @brief Lee la distancia estimada en centimetros.
          * @return Distancia en cm. Puede devolver 0 si hay timeout de lectura.
          */
-        float readDistanceCM();
+        float readDistanceCM() {
+            // Envia pulso de trigger.
+            digitalWrite(_triggerPin, LOW);
+            delayMicroseconds(2);
+            digitalWrite(_triggerPin, HIGH);
+            delayMicroseconds(10);
+            digitalWrite(_triggerPin, LOW);
+
+            // Mide duracion del pulso de echo.
+            const unsigned long duration = pulseIn(_echoPin, HIGH, 30000);
+
+            // Convierte duracion a distancia (velocidad del sonido ~343 m/s).
+            return (duration / 2.0f) * 0.0343f;
+        }
 
     private:
         uint8_t _triggerPin;

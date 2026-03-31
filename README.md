@@ -48,3 +48,4 @@ Con respecto a la parte interna de la librería, se deben seguir las siguientes 
 - **Comentarios y documentación interna**: Además de la documentación externa, es importante incluir comentarios dentro del código para explicar la lógica detrás de las funciones y cualquier decisión de diseño importante. Esto facilitará que otros desarrolladores puedan entender y contribuir al código en el futuro. Los comentarios deberán seguir el estandard de documentación Doxygen para C++ (o el standard correspondiente para el lenguaje utilizado).
 
 En resumen, el desarrollo de esta librería de software para control de robots educativos debe enfocarse en ofrecer una experiencia de usuario sencilla y accesible para estudiantes de secundaria, mientras se mantiene un código interno limpio, eficiente y fácil de mantener. Esto permitirá que los estudiantes puedan aprender y experimentar con la robótica de manera efectiva, sin preocuparse por detalles técnicos complejos.
+

@@ -13,18 +13,23 @@ class TARS_Magnetic {
          * @brief Crea una instancia del sensor magnetico.
          * @param pin Pin digital conectado a la salida del sensor.
          */
-        explicit TARS_Magnetic(uint8_t pin);
+        explicit TARS_Magnetic(uint8_t pin)
+            : _pin(pin) {}
 
         /**
          * @brief Configura el pin del sensor.
          */
-        void begin();
+        void begin() {
+            pinMode(_pin, INPUT);
+        }
 
         /**
          * @brief Indica si el iman fue detectado.
          * @return true si el pin del sensor esta en HIGH; false en caso contrario.
          */
-        bool isMagnetDetected() const;
+        bool isMagnetDetected() const {
+            return digitalRead(_pin) == HIGH;
+        }
 
     private:
         /**< Pin digital de entrada del sensor magnetico. */
