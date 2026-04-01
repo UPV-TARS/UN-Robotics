@@ -33,11 +33,13 @@ class TARS_Motors {
         void begin() {
             pinMode(_leftIN1Pin, OUTPUT);
             pinMode(_leftIN2Pin, OUTPUT);
-            pinMode(_leftENPin, OUTPUT);
 
             pinMode(_rightIN1Pin, OUTPUT);
             pinMode(_rightIN2Pin, OUTPUT);
-            pinMode(_rightENPin, OUTPUT);
+
+            // Configura los canales PWM para ESP32.
+            ledcAttach(_leftENPin, 1000, 8);   // Pin PWM izquierdo: 5kHz, 8-bit
+            ledcAttach(_rightENPin, 1000, 8);  // Pin PWM derecho: 5kHz, 8-bit
 
             // Arranca en estado seguro (motores detenidos).
             set(0, 0);
