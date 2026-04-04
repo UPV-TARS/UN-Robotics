@@ -14,10 +14,10 @@
  */
 class TARS_Bluetooth {
     public:
-        /** @brief PWM izquierdo del ultimo paquete valido. */
+        /** @brief PWM izquierdo del ultimo paquete valido en rango [-255, 255]. */
         int16_t pwm1 = 0;
 
-        /** @brief PWM derecho del ultimo paquete valido. */
+        /** @brief PWM derecho del ultimo paquete valido en rango [-255, 255]. */
         int16_t pwm2 = 0;
 
         /**
@@ -66,6 +66,7 @@ class TARS_Bluetooth {
 
         /**
          * @brief Indica si hay cliente Bluetooth conectado.
+         * @return true si existe un cliente conectado; false en caso contrario.
          */
         bool isConnected() {
             return _bt.connected();
@@ -123,6 +124,10 @@ class TARS_Bluetooth {
             char* endX = nullptr;
             const float x = std::strtof(data, &endX);
             if (endX != comma) {
+                return false;
+            }
+
+            if (std::isnan(x) || std::isinf(x)) {
                 return false;
             }
 

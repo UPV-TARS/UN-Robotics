@@ -22,8 +22,7 @@ joystickToPWM	KEYWORD2
 readLeft	KEYWORD2
 readRight	KEYWORD2
 isMagnetDetected	KEYWORD2
-readRaw	KEYWORD2
 readHue	KEYWORD2
-getHue	KEYWORD2
+readColorID	KEYWORD2
 readColorName	KEYWORD2
 readDistanceCM	KEYWORD2

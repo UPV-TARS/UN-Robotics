@@ -1,5 +1,6 @@
 #include <TARS.h>
 
+// Constructor: (pin digital del sensor magnetico).
 TARS_Magnetic magnetic(4);
 
 void setup() {

@@ -50,6 +50,9 @@ class TARS_Ultrasonic {
         }
 
     private:
+        /** @brief Pin digital conectado a TRIG. */
         uint8_t _triggerPin;
+
+        /** @brief Pin digital conectado a ECHO. */
         uint8_t _echoPin;
 };

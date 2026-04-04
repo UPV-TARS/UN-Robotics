@@ -1,5 +1,6 @@
 #include <TARS.h>
 
+// Constructor: (pin sensor izquierdo, pin sensor derecho).
 TARS_Infrared ir(34, 35);
 
 void setup() {

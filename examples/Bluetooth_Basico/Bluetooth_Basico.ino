@@ -1,5 +1,6 @@
 #include <TARS.h>
 
+// minPWM opcional (80 por defecto).
 TARS_Bluetooth bt;
 
 void setup() {

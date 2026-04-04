@@ -1,5 +1,6 @@
 #include <TARS.h>
 
+// Constructor sin parametros (usa I2C por defecto).
 TARS_RGBSensor rgb;
 
 void setup() {
@@ -14,9 +15,15 @@ void setup() {
 }
 
 void loop() {
+  // Lectura simple para clase: pedir solo el color detectado.
+  Serial.print("Color detectado: ");
+  Serial.print(rgb.readColorName());
+  Serial.print(" (ID: ");
+  Serial.print(rgb.readColorID());
+  Serial.println(")");
+
   Serial.print("Hue: ");
-  Serial.print(rgb.readHue());
-  Serial.print(" | Color: ");
-  Serial.println(rgb.readColorName());
-  delay(300);
+  Serial.println(rgb.readHue());
+
+  delay(200);
 }

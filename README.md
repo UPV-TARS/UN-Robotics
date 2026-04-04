@@ -1,74 +1,104 @@
-# UN-Robotics
+# UN-Robotics (TARS)
 
-Libreria educativa para controlar robots con ESP32 de forma sencilla en clase. Esta guia esta pensada para alumnado y profesorado: instalar, conectar componentes y empezar a programar rapido.
+Libreria educativa para ESP32 pensada para clase.
 
-## Que incluye
+Objetivo: que alumnado y profesorado puedan montar un robot y programarlo con pocas lineas, manteniendo una API clara y facil de recordar.
 
-- Control de motores DC y servo.
-- Lectura de sensores ultrasonico, infrarrojo, magnetico y RGB.
-- Comunicacion por Bluetooth.
-- Ejemplos listos para usar en Arduino IDE.
+## 1. Que puedes hacer con esta libreria
 
-## Uso rapido
+- Mover un robot con motores DC.
+- Controlar un microservo por angulo.
+- Leer sensores de ultrasonidos, infrarrojo, magnetico y RGB.
+- Recibir comandos por Bluetooth.
 
-Solo necesitas importar una linea:
+## 2. Instalacion (Arduino IDE)
 
-```cpp
-#include <TARS.h>
-```
+### Requisitos
+- Arduino IDE 1.8.x o superior.
+- Placa ESP32 (probado en DOIT ESP32 DevKit V1).
 
-Con eso tienes disponibles todos los componentes de la libreria.
-
-## Instalación
-
-### Requerimientos
-- Arduino IDE 1.8.0 o superior.
-- Placa ESP32 (testeado en DOIT ESP32 DevKit V1).
-
-### Pasos
-1. Descarga este repositorio como ZIP.
-2. En Arduino IDE: **Programa > Incluir librería > Añadir biblioteca .ZIP**.
+### Instalar esta libreria
+1. Ve a la seccion Releases del repositorio y descarga el ZIP de la ultima version.
+2. En Arduino IDE entra en Programa > Incluir libreria > Anadir biblioteca .ZIP.
 3. Selecciona el ZIP descargado.
 
-### Dependencias necesarias
-Instala estas librerías desde **Programa > Incluir librería > Gestionar bibliotecas**:
-- `ESP32Servo`
-- `Adafruit TCS34725`
-- `Adafruit BusIO`
+Tambien puedes descargarla directamente desde:
 
-## Componentes soportados
+https://github.com/UPV-TARS/UN-Robotics/releases/latest/download/TARS.zip
 
-| Componente | Clase | Método principal |
-|-----------|-------|------------------|
-| Servo (microservo) | `TARS_Servo` | `moveAngle(angle)` |
-| Motores DC | `TARS_Motors` | `set(pwm_izq, pwm_der)` |
-| Sensor Ultrasónico | `TARS_Ultrasonic` | `readDistanceCM()` |
-| Sensor Infrarrojo | `TARS_Infrared` | `readLeft()` / `readRight()` |
-| Sensor RGB | `TARS_RGBSensor` | `readColorName()` |
-| Sensor Magnético | `TARS_Magnetic` | `isMagnetDetected()` |
-| Bluetooth | `TARS_Bluetooth` | `update()` |
+### Instalar dependencias
+En Programa > Incluir libreria > Gestionar bibliotecas, instala:
+- ESP32Servo
+- Adafruit TCS34725
+- Adafruit BusIO
 
-## Ejemplos rápidos
+## 3. Primer sketch (estructura minima)
 
-### Servo
 ```cpp
 #include <TARS.h>
 
-TARS_Servo servo(14);  // GPIO 14
-
 void setup() {
-  servo.begin(90);  // Posición inicial 90°
 }
 
 void loop() {
-  servo.moveAngle(0);    // Izquierda
-  delay(500);
-  servo.moveAngle(180);  // Derecha
-  delay(500);
 }
 ```
 
-### Motores
+Con solo incluir `TARS.h` ya tienes acceso a todos los componentes.
+
+## 4. API rapida para clase
+
+### Motores (`TARS_Motors`)
+- Constructor: `TARS_Motors(in1Izq, in2Izq, enIzq, in1Der, in2Der, enDer)`.
+- `begin()` inicia pines.
+- `set(pwmIzq, pwmDer)` controla ambos motores con PWM.
+
+### Servo (`TARS_Servo`)
+- Constructor: `TARS_Servo(pinServo)`.
+- `begin(anguloInicial)`.
+- `moveAngle(angulo)`.
+- `getAngle()`.
+
+### Ultrasonido (`TARS_Ultrasonic`)
+- Constructor: `TARS_Ultrasonic(pinTrig, pinEcho)`.
+- `begin()`.
+- `readDistanceCM()`.
+
+### Infrarrojo (`TARS_Infrared`)
+- Constructor: `TARS_Infrared(pinIzq, pinDer)`.
+- `begin()`.
+- `readLeft()` / `readRight()`.
+
+### Magnetico (`TARS_Magnetic`)
+- Constructor: `TARS_Magnetic(pinSensor)`.
+- `begin()`.
+- `isMagnetDetected()`.
+
+### RGB (`TARS_RGBSensor`)
+- Constructor: `TARS_RGBSensor()` (sin parámetros).
+- `begin()`.
+- `readColorName()` (devuelve el nombre del color detectado).
+- `readColorID()` (devuelve el ID del color detectado, útil para lógica de control).
+- `readHue()`.
+
+### Bluetooth (`TARS_Bluetooth`)
+- Constructor: `TARS_Bluetooth(minPWM)` donde `minPWM` es opcional (por defecto 80).
+- `begin("Nombre")`.
+- `update()` para procesar la trama recibida.
+- `pwm1` y `pwm2` para leer la orden.
+
+## 5. Mapa rapido de parametros (constructores)
+
+- `TARS_Motors`: 6 pines del driver en este orden: izquierda `IN1, IN2, EN` y derecha `IN1, IN2, EN`.
+- `TARS_Servo`: 1 pin de senal PWM del servo.
+- `TARS_Ultrasonic`: 2 pines, primero `TRIG` y despues `ECHO`.
+- `TARS_Infrared`: 2 pines digitales, primero izquierdo y despues derecho.
+- `TARS_Magnetic`: 1 pin digital del sensor.
+- `TARS_RGBSensor`: sin parámetros, usa I2C por defecto.
+- `TARS_Bluetooth`: 1 parametro opcional de ajuste (`minPWM`).
+
+## 6. Ejemplo rapido: mover el robot
+
 ```cpp
 #include <TARS.h>
 
@@ -79,14 +109,19 @@ void setup() {
 }
 
 void loop() {
-  motors.set(200, 200);  // Adelante
+  motors.set(180, 180);
   delay(1000);
-  motors.set(0, 0);      // Parar
+
+  motors.set(-160, 160);
   delay(500);
+
+  motors.set(0, 0);
+  delay(600);
 }
 ```
 
-### Sensor RGB
+## 7. Ejemplo rapido: lectura de color
+
 ```cpp
 #include <TARS.h>
 
@@ -94,17 +129,36 @@ TARS_RGBSensor rgb;
 
 void setup() {
   Serial.begin(115200);
-  rgb.begin();
+  if (!rgb.begin()) {
+    Serial.println("No se encontro el sensor RGB");
+    while (true) {
+      delay(1000);
+    }
+  }
 }
 
 void loop() {
-  Serial.println(rgb.readColorName());
+  Serial.print("Color: ");
+  Serial.print(rgb.readColorName());
+  Serial.print(" | ID: ");
+  Serial.println(rgb.readColorID());
   delay(300);
 }
 ```
 
-## Más información
+## 8. Recomendaciones para docentes
 
-- Para ejemplos completos, ver la carpeta `examples/`.
-- Todos los ejemplos están listos para compilar en Arduino IDE.
+- Empieza por secuencias cortas con `set(pwmIzq, pwmDer)` y tiempos (`delay`).
+- Introduce primero lectura de color con `readColorName()`.
+- Usa la carpeta `examples/` como punto de partida para cada practica.
+
+## 9. Ejemplos incluidos
+
+- `examples/Bluetooth_Basico`
+- `examples/Infrarrojo_Basico`
+- `examples/Magnetico_Basico`
+- `examples/Motores_Basico`
+- `examples/RGB_Basico`
+- `examples/Servo_Basico`
+- `examples/Ultrasonido_Basico`
 

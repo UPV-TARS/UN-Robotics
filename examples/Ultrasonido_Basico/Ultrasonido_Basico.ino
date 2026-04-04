@@ -1,5 +1,6 @@
 #include <TARS.h>
 
+// Constructor: (pin TRIG, pin ECHO).
 TARS_Ultrasonic ultra(5, 18);
 
 void setup() {

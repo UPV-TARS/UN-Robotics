@@ -1,5 +1,6 @@
 #include <TARS.h>
 
+// Constructor: (pin de senal PWM del servo).
 // Pin D5 en NodeMCU suele mapear a GPIO 14.
 TARS_Servo servo(14);
 
