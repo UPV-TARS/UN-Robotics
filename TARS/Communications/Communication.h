@@ -2,3 +2,4 @@
 
 // Modulos de comunicacion disponibles en TARS.
 #include "Bluetooth.h"
+#include "wifi.h"
