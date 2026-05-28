@@ -57,6 +57,10 @@ class TARS_WiFi {
             _webSocket.begin();
             _webSocket.onEvent(_wsEventHandler);
             _getInstance() = this;
+
+            Serial.println();
+            Serial.print(F("URL: http://"));
+            Serial.println(WiFi.softAPIP());
         }
 
         /**
