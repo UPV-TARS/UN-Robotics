@@ -8,6 +8,7 @@ TARS_Infrared	KEYWORD1
 TARS_Magnetic	KEYWORD1
 TARS_RGBSensor	KEYWORD1
 TARS_Ultrasonic	KEYWORD1
+TARS_WiFi	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)

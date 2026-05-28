@@ -31,6 +31,7 @@ En Programa > Incluir libreria > Gestionar bibliotecas, instala:
 - ESP32Servo
 - Adafruit TCS34725
 - Adafruit BusIO
+- WebSockets
 
 ## 3. Primer sketch (estructura minima)
 
@@ -87,6 +88,12 @@ Con solo incluir `TARS.h` ya tienes acceso a todos los componentes.
 - `update()` para procesar la trama recibida.
 - `pwm1` y `pwm2` para leer la orden.
 
+### Wifi (`TARS_WiFi`)
+- Constructor: `TARS_WiFi(minPWM)` donde `minPWM` es opcional (por defecto 80).
+- `begin("SSID", "Password")`.
+- `update()` para procesar la trama recibida.
+- `pwm1` y `pwm2` para leer la orden.
+
 ## 5. Mapa rapido de parametros (constructores)
 
 - `TARS_Motors`: 6 pines del driver en este orden: izquierda `IN1, IN2, EN` y derecha `IN1, IN2, EN`.
@@ -95,6 +102,7 @@ Con solo incluir `TARS.h` ya tienes acceso a todos los componentes.
 - `TARS_Infrared`: 2 pines digitales, primero izquierdo y despues derecho.
 - `TARS_Magnetic`: 1 pin digital del sensor.
 - `TARS_RGBSensor`: sin parámetros, usa I2C por defecto.
+- `TARS_WiFi`: 1 parametro opcional de ajuste (`minPWM`).
 - `TARS_Bluetooth`: 1 parametro opcional de ajuste (`minPWM`).
 
 ## 6. Ejemplo rapido: mover el robot
@@ -161,4 +169,4 @@ void loop() {
 - `examples/RGB_Basico`
 - `examples/Servo_Basico`
 - `examples/Ultrasonido_Basico`
-
+- `examples/Wifi_Basico`
