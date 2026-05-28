@@ -15,6 +15,9 @@
  * y recibe comandos por WebSocket en formato JSON {"x": float, "y": float}
  * con rango [-1, 1]. Convierte a PWM diferencial y expone el resultado
  * en pwm1/pwm2.
+ * 
+ * @note Solo debe existir una instancia activa a la vez debido a la 
+ * naturaleza estatica del controlador de eventos WebSocket. 
  */
 class TARS_WiFi {
     public:
@@ -31,12 +34,21 @@ class TARS_WiFi {
         explicit TARS_WiFi(uint8_t minPWM = 80)
             : _minPWM(minPWM), _server(80), _webSocket(81) {}
 
+        ~TARS_WiFi() {
+            if (_getInstance() == this) {
+                _getInstance() = nullptr;
+            }
+        }
+
         /**
          * @brief Inicializa el Access Point, el servidor HTTP y el WebSocket.
          * @param ssid Nombre de la red WiFi creada.
          * @param password Contrasena de la red WiFi creada.
          */
         void begin(const char* ssid = "TARS", const char* password = "tars1234") {
+            if (_getInstance() != nullptr && _getInstance() != this) {
+                return; // Evitar sobreescribir si ya hay otra instancia activa
+            }
             WiFi.softAP(ssid, password);
             _server.on("/", [this]() {
                 _server.send_P(200, "text/html", _getHTML());
@@ -71,8 +83,10 @@ class TARS_WiFi {
 
         /**
          * @brief Convierte posicion de joystick a PWM diferencial y lo guarda en pwm1/pwm2.
-         * @param x Eje X en rango [-100, 100].
-         * @param y Eje Y en rango [-100, 100].
+         * @note Aunque los comandos por WebSocket llegan en el rango [-1, 1], esta funcion
+         * requiere parametros multiplicados por 100, es decir en formato de porcentaje.
+         * @param x Eje X en rango porcentual [-100, 100].
+         * @param y Eje Y en rango porcentual [-100, 100].
          * @param minPWM PWM minimo en comandos no nulos; usa el del constructor si es -1.
          */
         void joystickToPWM(float x, float y, int16_t minPWM = -1) {
@@ -102,7 +116,7 @@ class TARS_WiFi {
             return inst;
         }
 
-        static void _wsEventHandler(uint8_t num, WStype_t type, uint8_t* payload, size_t /*len*/) {
+        static void _wsEventHandler(uint8_t num, WStype_t type, uint8_t* payload, size_t len) {
             TARS_WiFi* self = _getInstance();
             if (!self) return;
 
@@ -111,30 +125,48 @@ class TARS_WiFi {
             } else if (type == WStype_DISCONNECTED) {
                 if (self->_clientCount > 0) self->_clientCount--;
             } else if (type == WStype_TEXT) {
+                char* buffer = new char[len + 1];
+                std::memcpy(buffer, payload, len);
+                buffer[len] = '\0';
+
                 float x, y;
-                if (_parseJSON(reinterpret_cast<const char*>(payload), x, y)) {
+                if (_parseJSON(buffer, x, y)) {
                     self->joystickToPWM(x * 100.0f, y * 100.0f);
                     self->_newData = true;
                 }
+
+                delete[] buffer;
             }
         }
 
+        static const char* _findJSONKey(const char* json, const char* key) {
+            const char* p = json;
+            size_t klen = std::strlen(key);
+            while ((p = std::strstr(p, key)) != nullptr) {
+                const char* after = p + klen;
+                while (*after == ' ' || *after == '\t' || *after == '\n' || *after == '\r') {
+                    after++;
+                }
+                if (*after == ':') return p;
+                p += klen;
+            }
+            return nullptr;
+        }
+
         static bool _parseJSON(const char* json, float& outX, float& outY) {
-            const char* xKey = std::strstr(json, "\"x\"");
-            const char* yKey = std::strstr(json, "\"y\"");
+            const char* xKey = _findJSONKey(json, "\"x\"");
+            const char* yKey = _findJSONKey(json, "\"y\"");
             if (!xKey || !yKey) return false;
 
-            xKey = std::strchr(xKey + 3, ':');
-            if (!xKey) return false;
+            const char* xVal = std::strchr(xKey, ':') + 1;
             char* endX = nullptr;
-            const float px = std::strtof(xKey + 1, &endX);
-            if (endX == xKey + 1 || std::isnan(px) || std::isinf(px)) return false;
+            const float px = std::strtof(xVal, &endX);
+            if (endX == xVal || std::isnan(px) || std::isinf(px)) return false;
 
-            yKey = std::strchr(yKey + 3, ':');
-            if (!yKey) return false;
+            const char* yVal = std::strchr(yKey, ':') + 1;
             char* endY = nullptr;
-            const float py = std::strtof(yKey + 1, &endY);
-            if (endY == yKey + 1 || std::isnan(py) || std::isinf(py)) return false;
+            const float py = std::strtof(yVal, &endY);
+            if (endY == yVal || std::isnan(py) || std::isinf(py)) return false;
 
             outX = px;
             outY = py;
